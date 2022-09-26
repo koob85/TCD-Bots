@@ -25,7 +25,7 @@ module.exports = {
 		),
 	
 	verifyEmbed: new Discord.EmbedBuilder()
-		.setDescription("**Welcome to RoCitizens Community Discord!** \nPlease read the <#1016785714639286380> and then type `!verify`", "")
+		.setDescription("**Welcome to The Countdown (TCD) Discord!** \nPlease read the <#1016785714639286380> and then type `!verify`", "")
 		.setImage("https://i.imgur.com/8BdiMcX.png")
 		.setColor("#2596be"),
 	

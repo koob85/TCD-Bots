@@ -221,7 +221,6 @@ TKbot.on('messageCreate', async message => {
 					}
 					break;
 			}
-			return;
 		}
 
 		// Moderation Actions
@@ -271,13 +270,12 @@ TKbot.on('messageCreate', async message => {
 			}
 		}
 	} else if (message.channel.id == Modules.verifyChannelId) {
-		let args = message.content.substring(Prefix).split(' ');
+		let args = message.content.substring(Prefix.length).split(' ');
 		if (args[0].toLowerCase() == 'verify') {
 			var IsBanned = false;
 			banDatabase.get(message.member.id).then(NewVar => {
 				IsBanned = NewVar
 				if (!IsBanned) {
-
 					// They get verified
 					var role1 = message.guild.roles.cache.find(
 						role => role.id == Modules.verifyRoleId
