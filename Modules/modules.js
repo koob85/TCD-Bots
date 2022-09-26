@@ -10,7 +10,7 @@ module.exports = {
 	verifyMessageId: "1016804032452509736", // Unupdated
 	auditLogChannelId: "1016785714639286377",
 	bbanRoleId: "1016785713003495608",
-	generalChannelId: "1016785715461374018",
+	generalChannelId: "1024007414531502180",
 	showcaseChannelId: "597837588069482517",
 	
 	// Tables

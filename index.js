@@ -251,6 +251,7 @@ TKbot.on('messageCreate', async message => {
 					break
 			}
 		}
+		};
 
 		if (message.channel.id == Modules.botsChannelId) {
 			if (message.author.id == 159985870458322944) { //If the sender is mee6
@@ -270,7 +271,7 @@ TKbot.on('messageCreate', async message => {
 				}
 			}
 
-		} else if (message.channel.id == Modules.verifyChannelId) {
+		if (message.channel.id == Modules.verifyChannelId) {
 			let args = message.content.substring(Prefix).split(' ');
 			if (args[0].toLowerCase() == 'verify') {
 				var IsBanned = false;
@@ -308,8 +309,8 @@ TKbot.on('messageCreate', async message => {
 			} else if (message.member.id != '698978344716206141') {
 				Modules.Util.deleteMessage(message)
 			};
-		};
 
+		}
 	}
 	
 });

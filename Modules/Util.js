@@ -80,6 +80,9 @@ module.exports = {
 	userIsMod(member, Senior) {
 		acceptedRoles = [
 			"Senior Moderator",
+			"Community Manager",
+			"Server Manager",
+			"Creator",
 		]
 		
 		// Check to see if it's only accepting senior. If not, add Moderator to the list.
