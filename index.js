@@ -111,7 +111,7 @@ fun stuff.
 */
 
 TKbot.on('ready', () => {
-	console.log('HenryBot is now online!');
+	console.log('The Timekeeper is now online!');
 
 	isOn = true;
 
@@ -131,12 +131,12 @@ TKbot.on('messageCreate', async message => {
 			return false, "You cannot use this bot in this guild"
 		}
 
-		// Ensure they're not a bot
-		if (message.author.bot) return;
-
 		// Handle base commands
 		let args = message.content.substring(Prefix.length).split(' ');
 		if (message.content.charAt(0) === Prefix) {
+
+			// Ensure they're not a bot
+			if (message.author.bot) return;
 
 			switch (args[0].toLowerCase()) {
 				case 'code':
@@ -251,66 +251,64 @@ TKbot.on('messageCreate', async message => {
 					break
 			}
 		}
+	};
+
+	if (message.channel.id == Modules.botsChannelId) {
+		if (message.author.id == 159985870458322944) { //If the sender is mee6
+			var content = message.content
+			var Member = message.mentions.members.first()
+			if (content.substring(content.length - 26, content.length) == "<:fdab:620677411759194132>" && content.substring(0, 2) == "GG") {
+				var TwoDigit = Number(content.substring(content.length - 28, content.length - 30))
+				if (TwoDigit) {
+					Modules.Util.rankUserUp(Member, TwoDigit, message);
+				} else {
+					Numb = Number(content.substring(content.length - 28, content.length - 29))
+					if (Numb) {
+						Modules.Util.rankUserUp(Member, Numb, message);
+					}
+				}
+
+			}
+		}
+	} else if (message.channel.id == Modules.verifyChannelId) {
+		let args = message.content.substring(Prefix).split(' ');
+		if (args[0].toLowerCase() == 'verify') {
+			var IsBanned = false;
+			banDatabase.get(message.member.id).then(NewVar => {
+				IsBanned = NewVar
+				if (!IsBanned) {
+
+					// They get verified
+					var role1 = message.guild.roles.cache.find(
+						role => role.id == Modules.verifyRoleId
+					);
+					message.member.roles.add(role1);
+					WelcomeMember(message.member)
+
+				} else {
+					var role1 = message.guild.roles.cache.find(
+						role => role.id == Modules.bbanRoleId
+					);
+					message.member.roles.add(role1);
+					banMember(message);
+				}
+			});
+
+			if (message.id !== Modules.verifyMessageId) {
+				Modules.Util.deleteMessage(message)
+			}
+		} else {
+			if (message.id !== Modules.verifyMessageId) {
+				Modules.Util.deleteMessage(message)
+			}
+		}
+	} else if (message.channel.id == Modules.hypeChannelId) {
+		let args = message.content.substring(Prefix).split(' ');
+		if (args[0].toLowerCase() == 'hype') {
+		} else if (message.member.id != TKbot.id) {
+			Modules.Util.deleteMessage(message)
 		};
 
-		if (message.channel.id == Modules.botsChannelId) {
-			if (message.author.id == 159985870458322944) { //If the sender is mee6
-				var content = message.content
-				var Member = message.mentions.members.first()
-				if (content.substring(content.length - 26, content.length) == "<:fdab:620677411759194132>" && content.substring(0, 2) == "GG") {
-					var TwoDigit = Number(content.substring(content.length - 28, content.length - 30))
-					if (TwoDigit) {
-						Modules.Util.rankUserUp(Member, TwoDigit, message);
-					} else {
-						Numb = Number(content.substring(content.length - 28, content.length - 29))
-						if (Numb) {
-							Modules.Util.rankUserUp(Member, Numb, message);
-						}
-					}
-
-				}
-			}
-
-		if (message.channel.id == Modules.verifyChannelId) {
-			let args = message.content.substring(Prefix).split(' ');
-			if (args[0].toLowerCase() == 'verify') {
-				var IsBanned = false;
-				banDatabase.get(message.member.id).then(NewVar => {
-					IsBanned = NewVar
-					if (!IsBanned) {
-
-						// They get verified
-						var role1 = message.guild.roles.cache.find(
-							role => role.id == Modules.verifyRoleId
-						);
-						message.member.roles.add(role1);
-						WelcomeMember(message.member)
-
-					} else {
-						var role1 = message.guild.roles.cache.find(
-							role => role.id == Modules.bbanRoleId
-						);
-						message.member.roles.add(role1);
-						banMember(message);
-					}
-				});
-
-				if (message.id !== '700164972726059049') {
-					Modules.Util.deleteMessage(message)
-				}
-			} else {
-				if (message.id !== '700164972726059049') {
-					Modules.Util.deleteMessage(message)
-				}
-			}
-		} else if (message.channel.id == Modules.hypeChannelId) {
-			let args = message.content.substring(Prefix).split(' ');
-			if (args[0].toLowerCase() == 'hype') {
-			} else if (message.member.id != '698978344716206141') {
-				Modules.Util.deleteMessage(message)
-			};
-
-		}
 	}
-	
+
 });
