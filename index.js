@@ -52,7 +52,7 @@ function RandomTextLoop() {
 	setTimeout(function () {
 		console.log("Random text loop")
 		var M = Modules.Util.getRandomInteger(0, Modules.randomMessage.length);
-		const guild = Hbot.guilds.cache.get('425766647588978709');
+		const guild = TKbot.guilds.cache.get('425766647588978709');
 		guild.channels.cache
 			.get('425766647588978711')
 			.send(Modules.randomMessage[M]);
@@ -93,9 +93,9 @@ function WelcomeMember(member) {
 			VerifyTable[member.id] = true
 			M = Modules.Util.getRandomInteger(0, Modules.welcomeMessages.length)
 			MessageContent = Modules.welcomeMessages[M]
-			if (MessageContent && Hbot) {
+			if (MessageContent && TKbot) {
 				MessageContent = MessageContent.replace("PLAYERPING", `<@${member.id}>`)
-				var Channel = Hbot.channels.cache.get(Modules.generalChannelId)
+				var Channel = TKbot.channels.cache.get(Modules.generalChannelId)
 				Channel.send(MessageContent).then(newMessage => {
 					newMessage.react("👋")
 				})
@@ -121,7 +121,6 @@ TKbot.on('ready', () => {
 });
 
 TKbot.on('messageCreate', async message => {
-	//console.log("Message create HBot")  
 	let Prefix = Modules.Settings.Prefixes.Timekeeper
 	let ModerationPrefix = Modules.Settings.Prefixes.Moderation
 
@@ -131,6 +130,9 @@ TKbot.on('messageCreate', async message => {
 		if (!Modules.Util.IsAllowedGuild(message.guild.id)) {
 			return false, "You cannot use this bot in this guild"
 		}
+
+		// Ensure they're not a bot
+		if (message.author.bot) return;
 
 		// Handle base commands
 		let args = message.content.substring(Prefix.length).split(' ');
@@ -143,12 +145,6 @@ TKbot.on('messageCreate', async message => {
 				case 'twitter':
 					Commands.get('twitter').execute(message, args);
 					break;
-				case 'rock':
-					Commands.get('rocc').execute(message, args);
-					break;
-				case 'rocc':
-					Commands.get('rocc').execute(message, args);
-					break;
 				case 'emergency':
 					Commands.get('emergency').execute(message, args);
 					break;
@@ -156,31 +152,22 @@ TKbot.on('messageCreate', async message => {
 					message.channel.send('Yes, <@' + message.author.id + '> is a noob!');
 					break;
 				case 'game':
-					message.channel.send("http://playrocitizens.com").then(replyMsg => {
+					message.channel.send("https://www.roblox.com/games/10530039851").then(replyMsg => {
 						setTimeout(() => Modules.Util.deleteMessage(replyMsg), Modules.Settings.AutoDeleteDebounce)
 					});
 					break;
 				case 'group':
-					message.channel.send("https://www.roblox.com/groups/2556057").then(replyMsg => {
+					message.channel.send("https://www.roblox.com/groups/15610821").then(replyMsg => {
 						setTimeout(() => Modules.Util.deleteMessage(replyMsg), Modules.Settings.AutoDeleteDebounce)
 					});
 					break;
-				case 'tree':
-					message.channel.send('TreeGang™ 🌳');
-					break;
 				case 'koob':
 					message.channel.send('is a noob');
-					break;
-				case 'koo':
-					message.channel.send('is a noo');
 					break;
 				case 'clown':
 					if (message.author.id == '493400807396343828') {
 						message.channel.send('yea ur STILL a clown ben we know');
 					}
-					break;
-				case 'hmessage':
-					Commands.get('message').execute(message, args);
 					break;
 				case 'sudo':
 					Commands.get('sudo').execute(message, args);
@@ -190,12 +177,6 @@ TKbot.on('messageCreate', async message => {
 					break;
 				case 'ban':
 					Commands.get('fakeban').execute(message, args);
-					break;
-				case 'zombies':
-					message.channel.send('Haha... W-what zombies? *Ahaha~*');
-					break;
-				case 'may':
-					message.channel.send('or june');
 					break;
 				case 'poll':
 					Commands.get('poll').execute(message, args);
@@ -209,17 +190,8 @@ TKbot.on('messageCreate', async message => {
 				case 'contestvote':
 					Commands.get('contestvote').execute(message, args);
 					break;
-				case 'jsudo':
-					Commands.get('jsudo').execute(message, args);
-					break;
-				case 'cping':
-					Commands.get('cping').execute(message, args);
-					break;
 				case 'contestwinners':
 					Commands.get('contestwinners').execute(message, args);
-					break;
-				case 'temp':
-					Commands.get('temp').execute(message, args);
 					break;
 				case 'getsubmissions':
 					Commands.get('getsubmissions').execute(message, args);
@@ -227,10 +199,10 @@ TKbot.on('messageCreate', async message => {
 				case 'hype':
 					Commands.get('hype').execute(message, args);
 					break
-				case "editmmessage":
+				case "editmessage":
 					if (Modules.Util.userHasRole(message.member, "Server Manager") == true) {
 						if (args[1]) {
-							var Channel = Mbot.channels.cache.get(args[1])
+							var Channel = TKbot.channels.cache.get(args[1])
 							if (args[2]) {
 								Channel.messages.fetch({ around: args[2], limit: 1 })
 									.then(messages => {
@@ -256,7 +228,7 @@ TKbot.on('messageCreate', async message => {
 		if (message.content.charAt(0) === ModerationPrefix) {
 			switch (args[0].toLowerCase()) {
 				case 'bban':
-					var Member = Commands.get('bban').execute(Mbot, message, args);
+					var Member = Commands.get('bban').execute(TKbot, message, args);
 					if (Member) {
 						if (!Modules.Settings.Testing) {
 							banDatabase.set(Member.user.id, true)
@@ -264,7 +236,7 @@ TKbot.on('messageCreate', async message => {
 					}
 					break;
 				case 'unbban':
-					var Member = Commands.get('unbban').execute(Mbot, message, args);
+					var Member = Commands.get('unbban').execute(TKbot, message, args);
 					if (Member) {
 						if (!Modules.Settings.Testing) {
 							banDatabase.delete(Member.user.id)
@@ -272,10 +244,10 @@ TKbot.on('messageCreate', async message => {
 					}
 					break;
 				case 'lvlup':
-					Commands.get('lvlup').execute(Mbot, message, args);
+					Commands.get('lvlup').execute(TKbot, message, args);
 					break
 				case 'slowmode':
-					Commands.get('slowmode').execute(Mbot, message, args);
+					Commands.get('slowmode').execute(TKbot, message, args);
 					break
 			}
 		}
@@ -294,25 +266,25 @@ TKbot.on('messageCreate', async message => {
 							Modules.Util.rankUserUp(Member, Numb, message);
 						}
 					}
-	
+
 				}
 			}
-	
+
 		} else if (message.channel.id == Modules.verifyChannelId) {
-			let args = message.content.substring(JunePrefix.length).split(' ');
+			let args = message.content.substring(Prefix).split(' ');
 			if (args[0].toLowerCase() == 'verify') {
 				var IsBanned = false;
 				banDatabase.get(message.member.id).then(NewVar => {
 					IsBanned = NewVar
 					if (!IsBanned) {
-	
+
 						// They get verified
 						var role1 = message.guild.roles.cache.find(
 							role => role.id == Modules.verifyRoleId
 						);
 						message.member.roles.add(role1);
 						WelcomeMember(message.member)
-	
+
 					} else {
 						var role1 = message.guild.roles.cache.find(
 							role => role.id == Modules.bbanRoleId
@@ -321,7 +293,7 @@ TKbot.on('messageCreate', async message => {
 						banMember(message);
 					}
 				});
-	
+
 				if (message.id !== '700164972726059049') {
 					Modules.Util.deleteMessage(message)
 				}
@@ -331,17 +303,13 @@ TKbot.on('messageCreate', async message => {
 				}
 			}
 		} else if (message.channel.id == Modules.hypeChannelId) {
-			let args = message.content.substring(JunePrefix.length).split(' ');
+			let args = message.content.substring(Prefix).split(' ');
 			if (args[0].toLowerCase() == 'hype') {
 			} else if (message.member.id != '698978344716206141') {
 				Modules.Util.deleteMessage(message)
 			};
 		};
-		
+
 	}
-
-
-	// Ensure they're not a bot
-	if (message.author.bot) return;
-
+	
 });
