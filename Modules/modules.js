@@ -12,12 +12,22 @@ module.exports = {
 	bbanRoleId: "1016785713003495608",
 	generalChannelId: "1016785715461374018",
 	showcaseChannelId: "597837588069482517",
+	elapsedChannelId: "1024482149891584000",
+	remainingChannelId: "1024449031331651634",
+	mainGuildId: "1016785712869290064",
 	
 	// Tables
 	codes: ["discordance"], //"sweettweets"
 	randomMessage: ["The timer remains ticking"],
 	roccResponse: ["<:Rocc:620680227332423710>", "<:RoccBod:651199921831280667>"],
 	welcomeMessages: ["Welcome to The Countdown community, PLAYERPING!","Hey there, PLAYERPING, welcome to The Countdown community!","Hi, PLAYERPING, welcome to TCD!"],
+
+	Descriptions: {
+		"Default" : "Welcome to The Countdown ⏰\nLive Stats:\nRemaining: {TIMEREMAINING}\nElapsed:{TIMEELAPSED}"
+	},
+	Names: {
+		"Default" : "This Game Will Be Deleted in {TIME_ABREVIATED}"
+	},
 	
 	// Strings
 	banResponse: "**You have been banned from the The Countdown Discord server** \nYou can still remain in the server to check out announcements and updates, but you cannot send or read messages. \nYou can DM a Moderator in `One Month` to appeal your ban.",

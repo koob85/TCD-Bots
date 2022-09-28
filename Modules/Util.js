@@ -28,37 +28,37 @@ module.exports = {
 	},
 
 	// Is in a valid guild
-	IsAllowedGuild(Id){
+	IsAllowedGuild(Id) {
 		return GuildWhitelist.includes(Id.toString())
 	},
-	
-	deleteMessage(message){
-		if (message.deletable){
+
+	deleteMessage(message) {
+		if (message.deletable) {
 			message.delete()
-			.then(messageValue => {
-				return true
-			})
-			.catch( error => {
-				console.log(error)
-				return false
-			})
+				.then(messageValue => {
+					return true
+				})
+				.catch(error => {
+					console.log(error)
+					return false
+				})
 		}
 	},
 
-	dmMember(member,messageContents){
+	dmMember(member, messageContents) {
 		member.send(messageContents)
 			.catch(error => {
 				console.log("Failed to DM member message.")
 			})
 	},
-	
+
 	// Sends an embed. literally so simple omg.
-	SendEmbed(Channel,Embed){
-		Channel.send( { embeds: [Embed] });
+	SendEmbed(Channel, Embed) {
+		Channel.send({ embeds: [Embed] });
 	},
 
 	// Member has a server manager/community manager role
-	userIsManager(member){
+	userIsManager(member) {
 		acceptedRoles = [
 			"Community Manager",
 			"Server Manager",
@@ -75,7 +75,7 @@ module.exports = {
 
 		return hasRole
 	},
-	
+
 	// Member has a moderator role
 	userIsMod(member, Senior) {
 		acceptedRoles = [
@@ -84,7 +84,7 @@ module.exports = {
 			"Server Manager",
 			"Creator",
 		]
-		
+
 		// Check to see if it's only accepting senior. If not, add Moderator to the list.
 		if (!Senior) {
 			acceptedRoles.push("Moderator")
@@ -147,6 +147,51 @@ module.exports = {
 				{ name: "Moderator", value: "<@" + ModeratorId + ">", inline: true },
 			);
 		return logEmbed
+	},
+
+	getTimeString(Time, Type) {
+		Type = Type || "Letters"
+
+		let Days = Math.floor(Time / 86400)
+		Time -= (Days * 86400)
+
+		let Hours = Math.floor(Time / 3600)
+		Time -= (Hours * 3600)
+
+		let Minutes = Math.floor(Time / 60)
+		Time -= (Minutes * 60)
+
+		if (Type == "Letters") {
+			return `${Days > 0 && Days + "d " || ""}${Hours}h ${Minutes}m`
+		} else {
+			return `${Days > 0 && Days + "d " || ""}${Hours}h ${Minutes}m`
+		}
+	},
+
+	getAbreviatedTimeString(Time) {
+
+		let Days = Math.floor(Time / 86400)
+		Time -= (Days * 86400)
+
+		if (Days > 0) {
+			return `${Days} ${Days > 1 && "Days" || "Day"}`
+		}
+
+		let Hours = Math.floor(Time / 3600)
+		Time -= (Hours * 3600)
+
+		if (Hours > 0){
+			return `${Hours} ${Hours > 1 && "Hours" || "Hour"}`
+		}
+		
+		let Minutes = Math.floor(Time / 60)
+		Time -= (Minutes * 60)
+
+		if (Minutes > 0){
+			return `${Minutes} ${Minutes > 1 && "Minutes" || "Minute"}`
+		}
+		
+		return "1 Minute"
 	},
 
 }
