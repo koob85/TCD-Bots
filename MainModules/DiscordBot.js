@@ -48,12 +48,14 @@ TKbot.login(process.env['BotToken'])
 function RandomTextLoop() {
 	setTimeout(function() {
 		console.log("Random text loop")
-		var M = Modules.Util.getRandomInteger(0, Modules.randomMessage.length);
-		const guild = TKbot.guilds.cache.get(Modules.mainGuildId);
-		guild.channels.cache
-			.get(Modules.generalChannelId)
-			.send(Modules.randomMessage[M]);
-		RandomTextLoop();
+		if (Modules.Settings.RandomTextLoop){
+			var M = Modules.Util.getRandomInteger(0, Modules.randomMessage.length);
+			const guild = TKbot.guilds.cache.get(Modules.mainGuildId);
+			guild.channels.cache
+				.get(Modules.generalChannelId)
+				.send(Modules.randomMessage[M]);
+			RandomTextLoop();
+		}
 	}, 7200000); // 7200000 // 2 Hours
 }
 

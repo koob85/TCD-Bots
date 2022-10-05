@@ -6,6 +6,7 @@ module.exports = {
 	},
 	Testing: true,
 	WelcomeNewVerifies: true,
+	RandomTextLoop: false,
 	AutoDeleteDebounce: 10000,
 	NameType: "Default",
 	DescriptionType: "Default",
