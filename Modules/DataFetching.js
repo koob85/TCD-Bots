@@ -5,6 +5,7 @@ let BaseURL = `https://apis.roblox.com/datastores/v1/universes/${process.env["Un
 let StartTick = 0
 let BaseDuration = 0
 let CurrentSupplemental = 0
+let SupplementalDividend = 10
 
 let DataTesting = true
 
@@ -29,6 +30,7 @@ async function GetBaseInfo() {
 			Body = JSON.parse(Body)
 			BaseDuration = Body["Duration"]
 			StartTick = Body["StartTime"]
+			SupplementalDividend = Body["SupplementalDividend"] || SupplementalDividend
 			BaseCalculated = true
 			return true
 		})
@@ -58,7 +60,7 @@ async function UpdateSupplemental(FunctionToExecute){
 		.then((Supplemental) => {
 			let NumberVersion = Number(Supplemental)
 			if (NumberVersion){
-				CurrentSupplemental = NumberVersion
+				CurrentSupplemental = NumberVersion / SupplementalDividend
 				return CurrentSupplemental
 			}
 		})
