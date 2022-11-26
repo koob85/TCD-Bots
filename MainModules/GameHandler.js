@@ -37,7 +37,7 @@ module.exports = {
 
 		// Update it
 		let NameType = Modules.Settings.NameType
-		if (TimeRemaining < 0){
+		if (TimeRemaining <= 0){
 			NameType = "Ended"
 		}
 		
@@ -52,7 +52,7 @@ module.exports = {
 		
 		// Actually update
 		let Info = { "name": Name } // { "name": Name, "description": Description }
-		noblox.updateUniverse(process.env["UniverseId"],Info)
+		noblox.updateUniverse(process.env["UniverseId"], Info)
 		.catch((something) => {
 			return false
 		})
