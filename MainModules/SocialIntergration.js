@@ -68,7 +68,7 @@ async function CheckTime() {
 
 	// Get the correct remaining
 	if (Remaining < 0){
-		TotalElapsed -= Math.abs(Remaining)
+		TotalElapsed -= Math.abs(Math.floor(Remaining))
 		Remaining = 0
 	}
 	
