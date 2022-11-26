@@ -1,7 +1,7 @@
 /*
 Discord Bot File
 -----
-Controls the bots with commands, and improves the game community.
+Controls the bots with commands, and improves the game community!
 */
 
 // Services
