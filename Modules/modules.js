@@ -26,7 +26,8 @@ module.exports = {
 		"Default" : "Welcome to The Countdown ⏰\nLive Stats:\nRemaining: {TIMEREMAINING}\nElapsed:{TIMEELAPSED}"
 	},
 	Names: {
-		"Default" : "This Game Will Be Deleted in {TIME_ABREVIATED}"
+		"Default" : "This Game Will Be Deleted in {TIME_ABREVIATED}",
+		"Ended" : "This Game Has Been Deleted.",
 	},
 	
 	// Strings

@@ -66,6 +66,12 @@ async function CheckTime() {
 		}
 	}
 
+	// Get the correct remaining
+	if (Remaining <= 0){
+		TotalElapsed -= Math.abs(Remaining)
+		Remaining = 0
+	}
+	
 	console.log(Remaining, "REMAINING", TotalElapsed, "ELAPSED")
 	console.log(ShouldTweet, "Twitter")
 	console.log(UpdateDiscord, "Discord")

@@ -28,31 +28,38 @@ module.exports = {
 		if (!loggedIn) {
 			return false
 		}
+	
+		// Get hours remaining
+		let RemainingText = Modules.Util.getTimeString(TimeRemaining)
 
-		if (TimeRemaining > 0) {
-			// Get hours remaining
-			let RemainingText = Modules.Util.getTimeString(TimeRemaining)
-			let ElapsedName = `Elapsed: ${Modules.Util.getTimeString(TimeElapsed)}`
-			let RemainingAbreviated = Modules.Util.getAbreviatedTimeString(TimeRemaining)
+		let ElapsedName = `Elapsed: ${Modules.Util.getTimeString(TimeElapsed)}`
+		let RemainingAbreviated = Modules.Util.getAbreviatedTimeString(TimeRemaining)
 
-			// Update it
-			let Name = Modules.Names[Modules.Settings.NameType || "Default"]
-			Name = Name.replace("{TIME_ABREVIATED}", RemainingAbreviated)
-
-			let Description = Modules.Descriptions[Modules.Settings.DescriptionType || "Default"]
-			Description = Description.replace("{TIMEREMAINING}", RemainingText)
-			Description = Description.replace("{TIMEELAPSED}", ElapsedName)
-
-			
-			noblox.updateUniverse(process.env["UniverseId"], { "name": Name, "description": Description })
-			.catch((something) => {
-				return false
-			})
-			.then((something) => {
-				return true
-			})
-			
-			return true
+		// Update it
+		let NameType = Modules.Settings.NameType
+		if (TimeRemaining < 0){
+			NameType = "Ended"
 		}
+		
+		// Format name
+		let Name = Modules.Names[NameType || "Default"]
+		Name = Name.replace("{TIME_ABREVIATED}", RemainingAbreviated)
+
+		// Format description
+		let Description = Modules.Descriptions[Modules.Settings.DescriptionType || "Default"]
+		Description = Description.replace("{TIMEREMAINING}", RemainingText)
+		Description = Description.replace("{TIMEELAPSED}", ElapsedName)
+		
+		// Actually update
+		let Info = { "name": Name } // { "name": Name, "description": Description }
+		noblox.updateUniverse(process.env["UniverseId"],Info)
+		.catch((something) => {
+			return false
+		})
+		.then((something) => {
+			return true
+		})
+		
+		return true
 	}
 }
