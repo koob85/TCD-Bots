@@ -27,7 +27,7 @@ module.exports = {
 	},
 	Names: {
 		"Default" : "This Game Will Be Deleted in {TIME_ABREVIATED}",
-		"Ended" : "This Game Has Been Deleted.",
+		"Ended" : "This Game Has Been Deleted [The Countdown]",
 	},
 	
 	// Strings
