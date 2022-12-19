@@ -45,7 +45,7 @@ async function UpdateSupplemental(FunctionToExecute){
 	await new Promise((resolve, reject) => {
 
 		let DataFetchRequest = new XMLHttpRequest()
-		let Params = `datastoreName=Supplemental&entryKey=${DataTesting && "Testing" || "Main"}`
+		let Params = `datastoreName=Supplemental&entryKey=${DataTesting && "Testing1" || "Main"}`
 
 		DataFetchRequest.open('GET', BaseURL + "?" + Params, true);
 		DataFetchRequest.setRequestHeader("x-api-key", process.env["RobloxKey"])

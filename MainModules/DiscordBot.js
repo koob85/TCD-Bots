@@ -315,7 +315,15 @@ module.exports = {
 
 		if (LoggedIn) {
 
-			let RemainingName = `Remaining: ${Modules.Util.getTimeString(TimeRemaining)}`
+			let Prefix = "Remaining"
+			
+			if (TimeElapsed < 0){
+				Prefix = "Beginning in"
+				TimeRemaining = Math.abs(TimeElapsed)
+				TimeElapsed = 0
+			}
+			
+			let RemainingName = `${Prefix}: ${Modules.Util.getTimeString(TimeRemaining)}`
 			let ElapsedName = `Elapsed: ${Modules.Util.getTimeString(TimeElapsed)}`
 
 			// Set channel names

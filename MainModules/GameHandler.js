@@ -29,17 +29,22 @@ module.exports = {
 			return false
 		}
 	
+		
+		// Check update type
+		let NameType = Modules.Settings.NameType
+		if (TimeRemaining <= 0){
+			NameType = "Ended"
+		} else if(TimeElapsed < 0){
+			TimeRemaining = Math.abs(TimeElapsed)
+			TimeElapsed = 0 
+			NameType = "Before"
+		}
+		
 		// Get hours remaining
 		let RemainingText = Modules.Util.getTimeString(TimeRemaining)
 
 		let ElapsedName = `Elapsed: ${Modules.Util.getTimeString(TimeElapsed)}`
 		let RemainingAbreviated = Modules.Util.getAbreviatedTimeString(TimeRemaining)
-
-		// Update it
-		let NameType = Modules.Settings.NameType
-		if (TimeRemaining <= 0){
-			NameType = "Ended"
-		}
 		
 		// Format name
 		let Name = Modules.Names[NameType || "Default"]

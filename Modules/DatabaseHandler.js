@@ -4,6 +4,10 @@ let fs = require("fs")
 let DatabasePath = ".//Database.json"
 let DatabaseStringModifier = "utf8"
 
+let isOpen = false
+let QueueKey
+let QueueValue
+
 async function GetDataExternal(){
 	try {
 		let jsonString = fs.readFileSync(DatabasePath,DatabaseStringModifier)
@@ -11,6 +15,19 @@ async function GetDataExternal(){
 		return Data
 	} catch (error) {
 		console.error(error)
+	}
+}
+
+function AddToQueue(Key,Value){
+	QueueKey = Key
+	QueueValue = Value
+}
+
+async function handleQueue(){
+	if (QueueKey){
+		module.exports.SetValue(QueueKey,QueueValue,true)
+		QueueKey = null
+		QueueValue = null
 	}
 }
 
@@ -28,20 +45,33 @@ module.exports = {
 		}
 	},
 	
-	async SetValue(Key,Value){
+	async SetValue(Key,Value,Recursive){
+		
+		if(isOpen){
+			if (!Recursive){
+				AddToQueue(Key,Value)
+			}
+			return
+		}
+		
 		let Data = await GetDataExternal()
 		
 		if (Data) {
 			Data[Key] = Value
 			let jsonString = JSON.stringify(Data)
 			
-			fs.writeFile(DatabasePath, jsonString, err => {
+			isOpen =  true
+			
+			await fs.writeFile(DatabasePath, jsonString, err => {
 				if (err) {
 					return false
 				} else {
 					return true
 				}
 			})
+						
+			isOpen = false
+			handleQueue()
 			
 		}
 	}
