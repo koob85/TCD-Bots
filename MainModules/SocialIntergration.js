@@ -103,7 +103,9 @@ function RunLoop() {
 // Initiate
 function Initiate() {
 	Modules.DataFetching.Initiate()
-
+	
+	console.log(Modules.DataFetching.GetInfo())
+	
 	RunLoop()
 
 }

@@ -34,13 +34,14 @@ async function GetBaseInfo() {
 			BaseCalculated = true
 			return true
 		})
+		
 		// if it fails, kill the repl and try again
 		.catch((Error) => {
 			return GetBaseInfo()
 		})
 }
 
-async function UpdateSupplemental(FunctionToExecute){
+async function UpdateSupplemental(FunctionToExecute) {
 
 	await new Promise((resolve, reject) => {
 
@@ -59,7 +60,7 @@ async function UpdateSupplemental(FunctionToExecute){
 	})
 		.then((Supplemental) => {
 			let NumberVersion = Number(Supplemental)
-			if (NumberVersion){
+			if (NumberVersion) {
 				CurrentSupplemental = NumberVersion / SupplementalDividend
 				return CurrentSupplemental
 			}
@@ -71,15 +72,15 @@ module.exports = {
 	async Initiate() {
 		await GetBaseInfo()
 	},
-	GetSupp(){
+	GetSupp() {
 		return CurrentSupplemental
 	},
-	async GetInfo(){
+	async GetInfo() {
 		await UpdateSupplemental()
 		let EndTime = StartTick + BaseDuration + CurrentSupplemental
-		return {EndTime,StartTick}
+		return { EndTime, StartTick }
 	},
-	GetStart(){
+	GetStart() {
 		return StartTick
 	}
 };
